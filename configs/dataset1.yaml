@@ -1,0 +1,5 @@
+type: csv
+path: data/raw/Credit Risk Benchmark Dataset.csv
+params:
+  sep: ","
+  encoding: "utf-8"
