@@ -1,5 +1,23 @@
-type: csv
-path: data/raw/Credit Risk Benchmark Dataset.csv
-params:
-  sep: ","
-  encoding: "utf-8"
+data:
+  type: csv
+  path: data/raw/Credit Risk Benchmark Dataset.csv
+  params:
+    sep: ","
+    encoding: "utf-8"
+
+experiment:
+  name: credit_default_prediction
+  target: default
+  task_type: classification  # ou regression
+  test_size: 0.2
+  random_state: 42
+
+eda:
+  enabled: true
+  output_dir: outputs/eda
+  steps:
+    summary: true
+    distributions: true
+    correlations: true
+    missing_values: true
+    outliers: true
