@@ -17,7 +17,10 @@ eda:
   output_dir: outputs/eda
   steps:
     summary: true
+    categorical: true
     distributions: true
     correlations: true
     missing_values: true
     outliers: true
+    target_mean_by_category: true
+    plot_target_mean_bar: true
