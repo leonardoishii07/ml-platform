@@ -1,0 +1,38 @@
+data:
+  type: csv
+  path: data/raw/netflix_titles.csv
+  params:
+    sep: ","
+    encoding: "utf-8"
+
+experiment:
+  name: netflix_rating_prediction
+  target: rating
+  task_type: regression  # ou regression
+  test_size: 0.2
+  random_state: 42
+
+eda:
+  enabled: true
+  output_dir: outputs/netflix_rating_prediction/eda
+  steps:
+    summary: true
+    categorical: true
+    distributions: true
+    correlations: true
+    missing_values: true
+    outliers: true
+    target_mean_by_category: false
+    plot_target_mean_bar: false
+
+preprocessing:
+  missing_values:
+    enabled: true
+    strategy: "median"
+    columns: null  # ou lista de colunas específicas
+
+  scaler:
+    enabled: true
+    strategy: "standard"  # opções: "standard", "minmax", "robust"
+    columns: null         # ou lista de colunas específicas (ex: ["age", "income"])
+
