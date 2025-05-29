@@ -1,5 +1,7 @@
 from src.preprocessing.missing_handler import MissingValueHandler
 from src.preprocessing.scaler_handler import ScalerHandler
+from src.preprocessing.encoder_handler import EncoderHandler
+from src.preprocessing.auto_feature_generator import AutoFeatureGenerator
 from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
@@ -26,9 +28,21 @@ class PreprocessingRunner:
             scaler = ScalerHandler(**scaler_cfg)
             scaler.fit(df)
             df = scaler.transform(df)
-
+            
         # Encoding (futuro)
-        # ...
+        encoder_cfg = self.config.get("encoder", {})
+        if encoder_cfg.get("enabled", False):
+            logger.info("Running EncoderHandler")
+            encoder = EncoderHandler(**encoder_cfg)
+            encoder.fit(df)
+            df = encoder.transform(df)
+
+        # Feature generation
+        feature_gen_cfg = self.config.get("auto_feature_generation", {})
+        if feature_gen_cfg.get("enabled", False):
+            logger.info("Running AutoFeatureGenerator")
+            feature_gen = AutoFeatureGenerator(**feature_gen_cfg)
+            df = feature_gen.generate_features(df)
 
         logger.info("Finished preprocessing")
         return df

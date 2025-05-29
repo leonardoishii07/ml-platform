@@ -1,20 +1,20 @@
 data:
   type: csv
-  path: data/raw/netflix_titles.csv
+  path: data/raw/online_shoppers_intention.csv
   params:
     sep: ","
     encoding: "utf-8"
 
 experiment:
-  name: netflix_rating_prediction
-  target: rating
-  task_type: regression  # ou regression
+  name: online_shoppers_intention_prediction
+  target: Revenue
+  task_type: classification
   test_size: 0.2
   random_state: 42
 
 eda:
   enabled: true
-  output_dir: outputs/netflix_rating_prediction/eda
+  output_dir: outputs/online_shoppers_intention/eda
   steps:
     summary: true
     categorical: true
@@ -22,12 +22,12 @@ eda:
     correlations: true
     missing_values: true
     outliers: true
-    target_mean_by_category: false
-    plot_target_mean_bar: false
+    target_mean_by_category: true
+    plot_target_mean_bar: true
 
 preprocessing:
   missing_values:
-    enabled: true
+    enabled: false
     strategy: "median"
     columns: null  # ou lista de colunas específicas
 
@@ -39,11 +39,11 @@ preprocessing:
   encoder:
     enabled: true
     strategy: "onehot"  # ou "label"
-    columns: ["country", "listed_in"]
-    
+    columns: ["Month", "OperatingSystems", "Browser", "Region", "TrafficType", "VisitorType", "Weekend"]
+
   auto_feature_generation:
     enabled: true
-    target_col: "default"
+    target_col: "Revenue"
     problem_type: "classification"
-    correlation_threshold: 0.01
+    correlation_threshold: 0.3
     top_k: 15
