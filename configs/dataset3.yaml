@@ -13,7 +13,7 @@ experiment:
   random_state: 42
 
 eda:
-  enabled: true
+  enabled: false
   output_dir: outputs/online_shoppers_intention/eda
   steps:
     summary: true
@@ -42,8 +42,37 @@ preprocessing:
     columns: ["Month", "OperatingSystems", "Browser", "Region", "TrafficType", "VisitorType", "Weekend"]
 
   auto_feature_generation:
-    enabled: true
+    enabled: false
     target_col: "Revenue"
     problem_type: "classification"
     correlation_threshold: 0.3
     top_k: 15
+
+feature_selection:
+  enabled: true
+  # Statistical based feature selection (ANOVA, mutual information)
+  statistical:
+    enabled: true
+    method: statistical
+    params:
+      method: f_test  # or mutual_info
+      k: 10
+      problem_type: classification
+
+  # Correlation based feature selection
+  correlation:
+    enabled: true
+    method: correlation
+    params:
+      method: pearson  # or spearman, kendall
+      threshold: 0.95
+      target_corr_threshold: 0.01
+
+  # Feature importance based selection (using tree-based models)
+  importance:
+    enabled: true
+    method: importance
+    params:
+      n_features: 10
+      problem_type: classification
+      importance_threshold: 0.01
